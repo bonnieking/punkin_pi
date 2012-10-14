@@ -4,10 +4,10 @@ import gst_audio
 audioplayer = gst_audio.AudioPlayer()
 
 def config(config):
-    global top
-    top = config['directory']
-    if not os.path.exists(top):
-        os.mkdir(top)
+    global media_dir
+    media_dir = config['media_dir']
+    if not os.path.exists(media_dir):
+        pass
 
 player_html = os.path.join(os.path.dirname(__file__), 'player.html')
 
@@ -19,37 +19,37 @@ def index():
     %(docs)s
     </body></html>
     """ % dict(
-        docs='<br />'.join('<a href="%s">%s</a>' % (name, name)
-                           for name in sorted(os.listdir(top)))
+        docs='<br />'.join('<a href="%s?button=start">%s</a>' % (name, name)
+                           for name in sorted(os.listdir(media_dir)))
         )
 
-@bobo.post('/:name')
-def toggle(bobo_request, name, butan):
-    if butan not in ['start', 'stop']:
+@bobo.query('/:name')
+def toggle(bobo_request, name, button):
+    if button not in ['start', 'stop']:
         return '500'
     foo = "BAR"
-    path = os.path.join(top, name)
+    path = os.path.join(media_dir, name)
 
-    if butan == 'start':
+    if button == 'start':
         foo = 'we are playing, so we will stop'
         if os.path.exists(path):
             audioplayer.start(path)
-            butan = 'stop'
+            button = 'stop'
         else:
             return "No Such File %s" % (name)
 
-    elif butan == 'stop':
+    elif button == 'stop':
         foo = 'we are stopped, so we will play'
         audioplayer.stop()
-        butan = 'start'
+        button = 'start'
     return open(player_html).read() % dict(name=name, 
-        butan=butan, b=bobo_request, foo=foo)
+        button=button, b=bobo_request, foo=foo)
 
 
 
-@bobo.query('/:name')
-def player(name, action='start'):
-    foo = 'this is a get'
-    butan = 'start'
-    return open(player_html).read() % dict(name=name, 
-        butan=butan, foo=foo, b='get')
+#@bobo.query('/:name')
+#def player(name, action='start'):
+#    foo = 'this is a get'
+#    button = 'start'
+#    return open(player_html).read() % dict(name=name, 
+#        button=button, foo=foo, b='get')

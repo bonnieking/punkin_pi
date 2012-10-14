@@ -1,19 +1,39 @@
 <html>
   <head>
     <title>Playing %(name)s</title>
-
-    <style type="text/css">
-      @import "http://o.aolcdn.com/dojo/1.3.0/dojo/resources/dojo.css";
-      @import "http://o.aolcdn.com/dojo/1.3.0/dijit/themes/tundra/tundra.css";
+    <style>
+        body { background-color: white; }
+        pre { font-family: monospace; 
+              color: black;
+        }
+        h2 { color: orange; 
+             font-family: 'arial';}
     </style>
-
   </head>
-  <body class="tundra">
-    <h1>%(name)s</h1>
-    %(foo)s<br>
-    <form method="POST" action="%(name)s">
-      <input type="hidden" name="butan" value="%(butan)s">
-      <input type="submit" value="%(butan)s">
+  <body>
+    <br>
+    <pre>
+                              /\                           
+                             / /                           
+                         ___( (___                         
+                      .-'(    `' )`-.                      
+                    ./    `"""""'    \.                    
+                   /                   \                   
+                  /                     \                  
+                 |       /\      /\      |                 
+                |       /O_\    /O_\      |                
+                |            /\           |                
+                |            ~~           |                
+                 |      \.        ./     |                 
+                  \      \\/\/\/\//     /                  
+                   \      \/\/\/\/     /                   
+                jgs `\               /'                    
+                      `--_________--'                      
+    </pre>
+    <h2>Playing %(name)s</h2>
+    <form method="GET" action="%(name)s">
+      <input type="hidden" name="button" value="%(button)s">
+      <input type="submit" value="%(button)s">
     </form>
   </body>
 
