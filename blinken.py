@@ -4,8 +4,8 @@ import time
 
 mode = GPIO.BCM
 
-red = 18
-orange = 17
+# red = 18
+# orange = 17
 
 
 class Blinker():
@@ -27,12 +27,36 @@ class Blinker():
         self.off()
         time.sleep(delay)
 
+    def cleanup(self):
+        # this is the default state of the pin
+        GPIO.setup(self.pin, GPIO.IN, GPIO.PUD_OFF)
+
 class BlinkRun(threading.Thread):
     def __init__(self, pin, delay):
-        self.blinker = Blinker(mode, pin)
+        self.pin = pin
+        self.blinker = Blinker(mode, self.pin)
         self.delay = delay        
         self.stopme = False
         self.terminated = False
+
+    def changedelay(self, units, increment=0.01):
+        # increase or decrease delay. Default increment 0.1secs
+        if self.delay + (units * increment) < 0:
+            self.delay = 0
+        else:
+            self.delay = self.delay + (units * increment)
+            print "new delay is %s" %self.delay
+   
+    def delayup(self, increment=0.01):
+        self.delay = self.delay + abs(increment)
+        print "new delay is %s" %self.delay
+
+    def delaydown(self, increment=0.01):
+        if self.delay - abs(increment) < 0:
+            self.delay = 0
+        else:
+            self.delay = self.delay - abs(increment)
+        print "new delay is %s" %self.delay
 
     def start(self):
         self.thread = threading.Thread(None, self.run, None, (), {})
@@ -42,10 +66,10 @@ class BlinkRun(threading.Thread):
         while self.stopme == False:
             self.blinker.blink(self.delay)
         self.terminated = True
+        self.blinker.cleanup()
 
     def stop(self):
         self.stopme = True
         while self.terminated == False:
             time.sleep(0.01)
-
-     
+    
