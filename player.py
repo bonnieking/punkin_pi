@@ -13,6 +13,7 @@ player_html = os.path.join(os.path.dirname(__file__), 'player.html')
 
 @bobo.query('/:name')
 def toggle(name=None, button='start'):
+    audioplayer.stop()
     if button not in ['start', 'stop']:
         return '500'
 
