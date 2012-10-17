@@ -57,6 +57,7 @@ class BlinkyDBUSService(dbus.service.Object):
     def off(self):
         print "off"
         self.blinker.off()
+        return "%s off" %self.pin
 
     @dbus.service.method('com.bonnielking.BlinkyPi')
     def blink(self, delay):

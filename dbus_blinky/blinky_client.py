@@ -6,8 +6,8 @@ class BlinkRun(threading.Thread):
     def __init__(self, delay, pin):
         bus = dbus.SystemBus()
         self.pin = pin
-        self.blinkyservice = bus.get_object('com.bonnielking.BlinkyPi', '/com/bonnielking/BlinkyPi/%s'%self.pin)
-        self.delay = dbus.Int32(delay)
+        self.blinkyservice = bus.get_object('com.bonnielking.BlinkyPi', '/com/bonnielking/BlinkyPi/17')
+        self.delay = delay
         self.stopme = False
         self.terminated = False
 
@@ -36,7 +36,7 @@ class BlinkRun(threading.Thread):
 
     def run(self):
         while self.stopme == False:
-            self.blinkyservice.get_dbus_method('blink', 'com.bonnielking.BlinkyPi')(dbus.Int32(1000))
+            self.blinkyservice.get_dbus_method('on', dbus_interface='com.bonnielking.BlinkyPi')()
         self.terminated = True
 
     def stop(self):
@@ -47,8 +47,8 @@ class BlinkRun(threading.Thread):
 
 
 
-#bus = dbus.SystemBus()
-#blinkyservice = bus.get_object('com.bonnielking.BlinkyPi', '/com/bonnielking/BlinkyPi/17')
-#blink = blinkyservice.get_dbus_method('on', 'com.bonnielking.BlinkyPi')
+bus = dbus.SystemBus()
+blinkyservice = bus.get_object('com.bonnielking.BlinkyPi', '/com/bonnielking/BlinkyPi/17')
+blink = blinkyservice.get_dbus_method('on', 'com.bonnielking.BlinkyPi')
 #print blink()
 
