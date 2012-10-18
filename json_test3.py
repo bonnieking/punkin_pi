@@ -78,10 +78,10 @@ def control():
             action = 'playing'
         #pass
     elif action == 'blinken1':
-        blink1 = blinken.BlinkRun(17, 0.2)
+        blink1 = blinken.BlinkRun(0.2)
         blink1.start()
     elif action == 'blinken2':   
-        blink2 = blinken.BlinkRun(18, 0.2)
+        blink2 = blinken.BlinkRun(0.2)
         blink2.blinker.reset()
         blink2.start()
         pass
