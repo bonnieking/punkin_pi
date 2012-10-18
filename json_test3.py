@@ -34,14 +34,6 @@ def index():
             $('#status').append(data);}
         });
     })
-    $('#lighttoggle2').click(function() {
-        $('#status').empty()
-        $.ajax({ url: '/control?action=blinken2',
-            cache: false, type: 'GET',
-            success: function(data) {
-            $('#status').append(data);}
-        });
-    })
 });
 </script>
 <style>

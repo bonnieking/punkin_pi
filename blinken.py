@@ -9,7 +9,7 @@ mode = GPIO.BCM
 
 
 class Blinker():
-    def __init__(self, mode, pin):
+    def __init__(self, mode, pin1, pin2):
        self.pin = pin
        self.mode = mode
        GPIO.setmode(self.mode)
