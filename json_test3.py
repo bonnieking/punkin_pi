@@ -53,6 +53,8 @@ def index():
 
 </body></html>'''
 
+
+
 @bottle.get('/control')
 def control():
     #ret_dict = {'action': action,
@@ -61,7 +63,8 @@ def control():
     
     action = bottle.request.query.action
     if action == 'playtrack':
-        pass         
+        audioplayer = gst_audio.AudioPlayer()
+        audioplayer.play()     
     elif action == 'blinken1':
         blink1 = blinken.BlinkRun(17, 0.2)
         blink1.start()
@@ -81,21 +84,11 @@ def doit():
     print bottle.request.forms.keys()
     for key in sorted(bottle.request.forms.keys()):
         print key, bottle.request.forms[key]
-    #for key in bottle.request.headers.keys():
         yield '{0}: {1}\n'.format(key, bottle.request.forms[key])
-    #yield '\n'
-#    for row in bottle.request.body:
-#        yield row
-#    yield '=*=*=*=*=*=*=*=*=*=*=\n'
-#    for key in sorted(bottle.request.forms.keys()):
-#        yield '{}: {}\n'.format(key, bottle.request.forms[key])
-#    for key in bottle.request.files.keys():
-#        yield 'file: {!r}'.format(bottle.request.files[key].filename)
 
 if __name__ == '__main__':
     bottle.debug(True)
 
     import gst_audio
     import blinken
-    audioplayer = gst_audio.AudioPlayer()
     bottle.run(host='0.0.0.0', port=8081, reloader=True)
