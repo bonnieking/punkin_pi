@@ -44,9 +44,18 @@ def index():
     })
 });
 </script>
-
-</head><body>
-<button id='soundtoggle'>sound toggle</button> <br><br>
+<style>
+        body { background-color: white; }
+        pre { font-family: monospace;
+              color: black;
+        }
+        h2 { color: orange;
+             font-family: 'arial';}
+</style>
+</head>
+<body>
+<br>
+<button id='soundtoggle'>Play sound</button> <br><br>
 <button id='lighttoggle1'>light toggle 1</button> <br><br>
 <button id='lighttoggle2'>light toggle 2</button> <br><br>
 <div id='status'></div>
@@ -63,8 +72,11 @@ def control():
     
     action = bottle.request.query.action
     if action == 'playtrack':
-        audioplayer = gst_audio.AudioPlayer()
-        audioplayer.play()     
+        if audioplayer.get_state() != 'GST_STATE_PLAYING':
+            audioplayer.play()     
+        else:
+            action = 'playing'
+        #pass
     elif action == 'blinken1':
         blink1 = blinken.BlinkRun(17, 0.2)
         blink1.start()
@@ -89,6 +101,7 @@ def doit():
 if __name__ == '__main__':
     bottle.debug(True)
 
+    audioplayer = gst_audio.AudioPlayer()
     import gst_audio
     import blinken
     bottle.run(host='0.0.0.0', port=8081, reloader=True)
