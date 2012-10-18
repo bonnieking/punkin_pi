@@ -10,7 +10,7 @@ class AudioPlayer:
         self.bus.connect("message::eos", self.on_finish)
         self.bus.add_signal_watch()
         self.is_playing = False  
-        self.playbin.set_property('uri', 'file:///home/pi/files/h.ogg')
+        self.playbin.set_property('uri', 'file:///home/pi/files/h.wav')
         self.mainloop = gobject.MainLoop()
  
     def play(self):

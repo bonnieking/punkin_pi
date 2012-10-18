@@ -46,10 +46,9 @@ def index():
 </style>
 </head>
 <body>
-<br>
+<h3>Pumpkin Pi control</h3>
 <button id='soundtoggle'>Play sound</button> <br><br>
-<button id='lighttoggle1'>light toggle 1</button> <br><br>
-<button id='lighttoggle2'>light toggle 2</button> <br><br>
+<button id='lighttoggle1'>Flash lights</button> <br><br>
 <div id='status'></div>
 
 </body></html>'''
@@ -68,15 +67,9 @@ def control():
             audioplayer.play()     
         else:
             action = 'playing'
-        #pass
     elif action == 'blinken1':
         blink1 = blinken.BlinkRun(0.2)
         blink1.start()
-    elif action == 'blinken2':   
-        blink2 = blinken.BlinkRun(0.2)
-        blink2.blinker.reset()
-        blink2.start()
-        pass
     print action
     yield '{0}: {1}\n'.format('action', action)
     
