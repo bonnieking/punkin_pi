@@ -1,6 +1,7 @@
 import bottle
 import gst_audio
 import json
+import os
 
 
 @bottle.get('<file:re:^.*\.(css|less|js|jpg|png|gif|ttf)>')
@@ -9,53 +10,16 @@ def static_file(file):
 
 
 @bottle.get('/')
-@bottle.view('index.tpl')
+@bottle.view('index')
 def index():
+    return "index stuff"
 
-    return '''<!DOCTYPE html><html><head><meta charset="utf-8">
-<meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>SCARY</title>
-<pre id="console"></pre>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function() { 
-    $('#soundtoggle').click(function() {
-        $('#status').empty()
-        $.ajax({ url: '/control?action=playtrack&track=a',
-            cache: false, type: 'GET',
-            success: function(data) {
-            $('#status').append(data);}
-        });
-    })
-    $('#lighttoggle1').click(function() {
-        $('#status').empty()
-        $.ajax({ url: '/control?action=blinken1',
-            cache: false, type: 'GET',
-            success: function(data) {
-            $('#status').append(data);}
-        });
-    })
-});
-</script>
-<style>
-        body { background-color: white; }
-        pre { font-family: monospace;
-              color: black;
-        }
-        h2 { color: orange;
-             font-family: 'arial';}
-</style>
-</head>
-<body>
-<h3>Pumpkin Pi control</h3>
-<button id='soundtoggle'>Play sound</button> <br><br>
-<button id='lighttoggle1'>Flash lights</button> <br><br>
-<div id='status'></div>
-
-</body></html>'''
-
-
+@bottle.route('/hello')
+@bottle.route('/hello/<name>')
+@bottle.view('index')
+def hello(name='World'):
+    files = sorted(os.listdir("/home/pi/files"))
+    return {'files': files}
 
 @bottle.get('/control')
 def control():
@@ -63,7 +27,8 @@ def control():
     track = bottle.request.query.track
     if action == 'playtrack':
         print "track" + track
-        audioplayer.setUri("file:///home/pi/files/h.wav")     
+        filepath = os.path.join(media_dir, track)
+        audioplayer.setUri("file:///"+filepath)     
         audioplayer.play()     
     elif action == 'blinken1':
         blink1 = blinken.BlinkRun(0.2)
@@ -85,6 +50,7 @@ if __name__ == '__main__':
     bottle.debug(True)
 
     audioplayer = gst_audio.AudioPlayer()
+    media_dir = '/home/pi/files'
     import gst_audio
     import blinken
     bottle.run(host='0.0.0.0', port=8081, reloader=True)
