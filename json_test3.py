@@ -8,16 +8,9 @@ import os
 def static_file(file):
     return bottle.static_file(file, root='/home/pi/web')
 
-
 @bottle.get('/')
 @bottle.view('index')
-def index():
-    return "index stuff"
-
-@bottle.route('/hello')
-@bottle.route('/hello/<name>')
-@bottle.view('index')
-def hello(name='World'):
+def index(name='World'):
     files = sorted(os.listdir("/home/pi/files"))
     return {'files': files}
 

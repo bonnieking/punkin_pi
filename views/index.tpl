@@ -3,9 +3,10 @@
   <title>Content Title</title>
 </head>
 <body>
-  This is the page content: Hello World!
-
-{{ number }}
-
+These are the files:
+%for f in files:
+{{ f }}
+%end
 </body>
 </html>
+
