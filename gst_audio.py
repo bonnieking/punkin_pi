@@ -10,8 +10,11 @@ class AudioPlayer:
         self.bus.connect("message::eos", self.on_finish)
         self.bus.add_signal_watch()
         self.is_playing = False  
-        self.playbin.set_property('uri', 'file:///home/pi/files/h.wav')
         self.mainloop = gobject.MainLoop()
+
+    def setUri(self, uri):
+	print "setUri" + uri
+        self.playbin.set_property('uri', uri)
  
     def play(self):
         if self.get_state() != 'GST_STATE_PLAYING':

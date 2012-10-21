@@ -16,9 +16,12 @@ pi@raspberrypi ~/punkin_pi $ sudo python ./json_test3.py
 Required to install (assuming Debian or Raspbian):
 
 <code>
-apt-get install python-dev python-gst0.10 gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly
+apt-get update && apt-get install python-dev python-setuptools python-gst0.10 gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly
 </code>
 
 <code>
-sudo easy_install RPi.GPIO
+sudo easy_install bottle
+</code>
+<code>
+sudo easy_install RPi.GPIO  #note: already install in the latest Sept-18 Raspbian image
 </code>

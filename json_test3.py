@@ -5,11 +5,13 @@ import json
 
 @bottle.get('<file:re:^.*\.(css|less|js|jpg|png|gif|ttf)>')
 def static_file(file):
-    return bottle.static_file(file, root='./web')
+    return bottle.static_file(file, root='/home/pi/web')
 
 
 @bottle.get('/')
+@bottle.view('index.tpl')
 def index():
+
     return '''<!DOCTYPE html><html><head><meta charset="utf-8">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <title>SCARY</title>
@@ -20,7 +22,7 @@ def index():
     $(document).ready(function() { 
     $('#soundtoggle').click(function() {
         $('#status').empty()
-        $.ajax({ url: '/control?action=playtrack',
+        $.ajax({ url: '/control?action=playtrack&track=a',
             cache: false, type: 'GET',
             success: function(data) {
             $('#status').append(data);}
@@ -57,16 +59,12 @@ def index():
 
 @bottle.get('/control')
 def control():
-    #ret_dict = {'action': action,
-    #            'blink1': b1_state,
-    #            'blink2': b2_state}
-    
     action = bottle.request.query.action
+    track = bottle.request.query.track
     if action == 'playtrack':
-        if audioplayer.get_state() != 'GST_STATE_PLAYING':
-            audioplayer.play()     
-        else:
-            action = 'playing'
+        print "track" + track
+        audioplayer.setUri("file:///home/pi/files/h.wav")     
+        audioplayer.play()     
     elif action == 'blinken1':
         blink1 = blinken.BlinkRun(0.2)
         blink1.start()
