@@ -5,15 +5,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 <script type="text/javascript">
+
     $(document).ready(function() { 
-    $('#soundtoggle').click(function() {
+
+%for f in filedict.keys():
+    $('#{{ f }}').click(function() {
         $('#status').empty()
-        $.ajax({ url: '/control?action=playtrack&track=h.wav',
+        $.ajax({ url: '/control?action=playtrack&track={{ filedict[f] }}',
             cache: false, type: 'GET',
             success: function(data) {
             $('#status').append(data);}
         });
     })
+%end
+
     $('#lighttoggle1').click(function() {
         $('#status').empty()
         $.ajax({ url: '/control?action=blinken1',
@@ -35,13 +40,13 @@
 </head>
 <body>
 <h3>Pumpkin Pi control</h3>
-<button id='soundtoggle'>Play sound</button> <br><br>
+
+%for f in filedict.keys():
+    <button id='{{ f }}'>{{ filedict[f] }}</button> <br><br>
+%end
+
 <button id='lighttoggle1'>Flash lights</button> <br><br>
 <div id='status'></div>
-These are the files:
-%for f in files:
-{{ f }}
-%end
 
 </body></html>
 

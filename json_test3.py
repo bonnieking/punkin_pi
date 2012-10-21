@@ -11,8 +11,12 @@ def static_file(file):
 @bottle.get('/')
 @bottle.view('index')
 def index(name='World'):
+    filedict = {}
     files = sorted(os.listdir("/home/pi/files"))
-    return {'files': files}
+    for f in range(len(files)):
+        filedict[f] = files[f]
+    
+    return {'filedict': filedict}
 
 @bottle.get('/control')
 def control():
