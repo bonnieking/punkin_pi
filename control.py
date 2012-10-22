@@ -2,11 +2,12 @@ import bottle
 import gst_audio
 import json
 import os
+import subprocess
 
 
 @bottle.get('<file:re:^.*\.(css|less|js|jpg|png|gif|ttf)>')
 def static_file(file):
-    return bottle.static_file(file, root='/home/pi/web')
+    return bottle.static_file(file, root=os.getcwd()+'/static/')
 
 @bottle.get('/')
 @bottle.view('index')
@@ -25,11 +26,12 @@ def control():
     if action == 'playtrack':
         print "track" + track
         filepath = os.path.join(media_dir, track)
-        audioplayer.setUri("file:///"+filepath)     
-        audioplayer.play()     
-    elif action == 'blinken1':
         blink1 = blinken.BlinkRun(0.2)
         blink1.start()
+        subprocess.call(["mplayer", filepath])
+        blink1.stop()
+        #audioplayer.setUri("file:///"+filepath)     
+        #audioplayer.play()     
     print action
     yield '{0}: {1}\n'.format('action', action)
     
