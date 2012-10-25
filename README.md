@@ -7,7 +7,7 @@ Written by Bonnie King and Drew Fustini.  Code and design is public domain.
 Install dependencies:
 ---------------------
 <code>
-sudo apt-get install git-core mplayer python-setuptools 
+sudo apt-get install git-core mplayer python-setuptools
 </code>
 
 <code>
@@ -19,7 +19,7 @@ sudo easy_install RPi.GPIO  #note: already installed in the latest Sept-18 Raspb
 </code>
 
 Install sound clip files:
---------------------------
+-------------------------
 
 <code>
 pi@raspberrypi ~ $ mkdir files
@@ -43,7 +43,6 @@ pi@raspberrypi ~/files $ wget http://www.countessbloodshalloweenhorror.com/sound
 
 Any files that mplayer can play can be put into /home/pi/files such as .wav, .mp3 & .ogg.
 
-
 Install & run punkin_pi:
 ------------------------
 <code>
@@ -61,7 +60,7 @@ Audio troubleshooting:
 If you want to check if punkin_pi will be able to play a particular file in /home/pi/files, then try to play it with mplayer:
 
 <code>
-mplayer /home/pi/files/<filename>
+mplayer /home/pi/files/howl.wav
 </code>
 
 Sometimes the sound system may become unstable and produce errors.  Restarting ALSA should resolve this:
