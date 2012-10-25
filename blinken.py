@@ -4,11 +4,11 @@ import time
 
 mode = GPIO.BCM
 
-# red = 18
-# orange = 17
-
+# red = 17
+# orange or yellow = 18
 
 class Blinker():
+    #TODO: modify to take 2nd pin argument in order to properly toggle between 2 pins without any hardcoding
     def __init__(self, mode, pin):
        self.pin = pin
        self.mode = mode
