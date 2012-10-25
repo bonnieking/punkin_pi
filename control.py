@@ -1,5 +1,4 @@
 import bottle
-import gst_audio
 import json
 import os
 import subprocess
@@ -13,7 +12,7 @@ def static_file(file):
 @bottle.view('index')
 def index(name='World'):
     filedict = {}
-    files = sorted(os.listdir("/home/pi/files"))
+    files = sorted(os.listdir(media_dir))
     for f in range(len(files)):
         filedict[f] = files[f]
     
@@ -30,8 +29,6 @@ def control():
         blink1.start()
         subprocess.call(["mplayer", filepath])
         blink1.stop()
-        #audioplayer.setUri("file:///"+filepath)     
-        #audioplayer.play()     
     print action
     yield '{0}: {1}\n'.format('action', action)
     
@@ -48,8 +45,6 @@ def doit():
 if __name__ == '__main__':
     bottle.debug(True)
 
-    audioplayer = gst_audio.AudioPlayer()
     media_dir = '/home/pi/files'
-    import gst_audio
     import blinken
     bottle.run(host='0.0.0.0', port=8081, reloader=True)
