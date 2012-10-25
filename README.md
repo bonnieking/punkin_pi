@@ -1,9 +1,10 @@
 punkin_pi
 =========
+Scary Halloween pumpkin with lights and sound controlled by a Raspberry Pi.  Refer to element14 blog posts for more info: http://www.element14.com/community/groups/raspberry-pi/blog/tags/pumpkin_pi
 
-Scary halloween Pumpkin
+Written by Bonnie King and Drew Fustini.  Code and design is public domain.
 
-run the demo server:
+To run the demo server:
 
 <code>
 pi@raspberrypi ~/punkin_pi $ export PYTHONPATH=$PWD #this is needed so the modules are found
@@ -22,6 +23,7 @@ apt-get update && apt-get install python-dev python-setuptools python-gst0.10 gs
 <code>
 sudo easy_install bottle
 </code>
+
 <code>
 sudo easy_install RPi.GPIO  #note: already install in the latest Sept-18 Raspbian image
 </code>
