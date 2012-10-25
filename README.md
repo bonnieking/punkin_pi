@@ -10,7 +10,7 @@ pi@raspberrypi ~/punkin_pi $ export PYTHONPATH=$PWD #this is needed so the modul
 </code>
 
 <code>
-pi@raspberrypi ~/punkin_pi $ sudo python ./json_test3.py 
+pi@raspberrypi ~/punkin_pi $ sudo python ./control.py
 </code>
 
 Required to install (assuming Debian or Raspbian):
