@@ -29,6 +29,17 @@ def control():
         blink1.start()
         subprocess.call(["mplayer", filepath])
         blink1.stop()
+    elif action == 'lightOn1':
+        light = blinken.Light(17)
+	light.on();
+    elif action == 'lightOn2':
+        light = blinken.Light(18)
+	light.on();
+    elif action == 'lightsOff':
+        light = blinken.Light(17)
+	light.off();
+        light = blinken.Light(18)
+	light.off();
     print action
     yield '{0}: {1}\n'.format('action', action)
     

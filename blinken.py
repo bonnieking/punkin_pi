@@ -7,8 +7,28 @@ mode = GPIO.BCM
 # red = 17
 # orange or yellow = 18
 
+class Light():
+    def __init__(self, pin):
+       self.pin = pin
+       self.mode = mode
+       GPIO.setmode(self.mode)
+       GPIO.setup(self.pin, GPIO.OUT)
+
+    def on(self):
+        GPIO.output(self.pin, GPIO.HIGH)
+ 
+    def off(self):
+        GPIO.output(self.pin, GPIO.LOW)
+
+    def cleanup(self):
+        # this is the default state of the pins
+        GPIO.setup(self.pin, GPIO.IN, GPIO.PUD_OFF)
+
+    def reset(self):
+        self.cleanup()
+        GPIO.setup(self.pin, GPIO.OUT)
+
 class Blinker():
-    #TODO: modify to take 2nd pin argument in order to properly toggle between 2 pins without any hardcoding
     def __init__(self, mode, pin1, pin2):
        self.pin1 = pin1
        self.pin2 = pin2

@@ -16,8 +16,20 @@
     })
 %end
 
-    $('#lighttoggle1').click(function() {
-        $.ajax({ url: '/control?action=blinken1',
+    $('#lightOn1').click(function() {
+        $.ajax({ url: '/control?action=lightOn1',
+            cache: false, type: 'GET', success: true
+        });
+    })
+
+    $('#lightOn2').click(function() {
+        $.ajax({ url: '/control?action=lightOn2',
+            cache: false, type: 'GET', success: true
+        });
+    })
+
+    $('#lightsOff').click(function() {
+        $.ajax({ url: '/control?action=lightsOff',
             cache: false, type: 'GET', success: true
         });
     })
@@ -50,11 +62,14 @@ h2 { color: orange; font-family: 'arial';}
                   `--_________--'                      
 </pre>
 <h3>Pumpkin Pi control</h3>
-
+<hr>
 %for f in filedict.keys():
     <button id='{{ f }}'>Play {{ filedict[f] }}</button> <br><br>
 %end
-
-<button id='lighttoggle1'>Flash lights</button> <br><br>
-
-</body></html>
+<hr>
+<button id='lightOn1'>Turn on Yellow</button> <br><br>
+<button id='lightOn2'>Turn on Red</button> <br><br>
+<button id='lightsOff'>Turn off both</button> <br><br>
+<hr>
+</body>
+</html>
