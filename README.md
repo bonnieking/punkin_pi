@@ -7,6 +7,10 @@ Written by Bonnie King and Drew Fustini.  Code and design is public domain.
 Install dependencies:
 ---------------------
 <code>
+sudo apt-get update
+</code>
+
+<code>
 sudo apt-get install git-core mplayer python-setuptools
 </code>
 
@@ -50,6 +54,10 @@ pi@raspberrypi ~ $ git clone https://github.com/pdp7/punkin_pi.git
 </code>
 
 To run the demo server:
+
+<code>
+pi@raspberrypi ~ $ cd punkin_pi
+</code>
 
 <code>
 pi@raspberrypi ~/punkin_pi $ sudo python ./control.py
