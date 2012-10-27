@@ -2,7 +2,7 @@ Project: punkin_pi
 ====================
 Scary Halloween pumpkin with lights and sound controlled by a Raspberry Pi.  Refer to element14 blog posts for more info: http://www.element14.com/community/groups/raspberry-pi/blog/tags/pumpkin_pi
 
-Written by Bonnie King and Drew Fustini.  Code and design is public domain.
+Written by Bonnie King and Drew Fustini.  Code and design is public domain.  These instructions were tested on the current Raspbian 2012-Sept-18 image from http://www.raspberrypi.org/downloads.
 
 Install dependencies:
 ---------------------
@@ -19,8 +19,10 @@ sudo easy_install bottle
 </code>
 
 <code>
-sudo easy_install RPi.GPIO  #note: already installed in the latest Sept-18 Raspbian image
+sudo easy_install RPi.GPIO
 </code>
+
+Note: If running an earlier image, then you may encounter an error on when installing the RPi.GPIO in that last step ("couldn't find Python.h").  To resolve the error, run "sudo apt-get install python-dev" and then "sudo easy_install RPi.GPIO" again.  Thanks to Joel Dunn for the advice.
 
 Install sound clip files:
 -------------------------
