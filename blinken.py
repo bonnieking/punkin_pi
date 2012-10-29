@@ -4,12 +4,11 @@ import time
 
 mode = GPIO.BCM
 
-# red = 18
-# orange = 17
+# red = 17
+# orange or yellow = 18
 
-
-class Blinker():
-    def __init__(self, mode, pin):
+class Light():
+    def __init__(self, pin):
        self.pin = pin
        self.mode = mode
        GPIO.setmode(self.mode)
@@ -21,6 +20,31 @@ class Blinker():
     def off(self):
         GPIO.output(self.pin, GPIO.LOW)
 
+    def cleanup(self):
+        # this is the default state of the pins
+        GPIO.setup(self.pin, GPIO.IN, GPIO.PUD_OFF)
+
+    def reset(self):
+        self.cleanup()
+        GPIO.setup(self.pin, GPIO.OUT)
+
+class Blinker():
+    def __init__(self, mode, pin1, pin2):
+       self.pin1 = pin1
+       self.pin2 = pin2
+       self.mode = mode
+       GPIO.setmode(self.mode)
+       GPIO.setup(self.pin1, GPIO.OUT)
+       GPIO.setup(self.pin2, GPIO.OUT)
+
+    def on(self):
+        GPIO.output(self.pin1, GPIO.HIGH)
+        GPIO.output(self.pin2, GPIO.LOW)
+ 
+    def off(self):
+        GPIO.output(self.pin1, GPIO.LOW)
+        GPIO.output(self.pin2, GPIO.HIGH)
+
     def blink(self, delay):
         self.on()
         time.sleep(delay)
@@ -28,15 +52,21 @@ class Blinker():
         time.sleep(delay)
 
     def cleanup(self):
-        # this is the default state of the pin
-        GPIO.setup(self.pin, GPIO.IN, GPIO.PUD_OFF)
+        # this is the default state of the pins
+        GPIO.setup(self.pin1, GPIO.IN, GPIO.PUD_OFF)
+        GPIO.setup(self.pin2, GPIO.IN, GPIO.PUD_OFF)
+
+    def reset(self):
+        self.cleanup()
+        GPIO.setup(self.pin1, GPIO.OUT)
+        GPIO.setup(self.pin2, GPIO.OUT)
 
 class BlinkRun(threading.Thread):
-    def __init__(self, pin, delay):
-        self.pin = pin
-        self.blinker = Blinker(mode, self.pin)
-        self.delay = delay        
-        self.stopme = False
+    def __init__(self, delay):
+        self.blinker = Blinker(GPIO.BCM, 17, 18)
+        self.delay = delay 
+        self.stoprequest = threading.Event()
+        self.stoprequest.clear()         
         self.terminated = False
 
     def changedelay(self, units, increment=0.01):
@@ -63,13 +93,11 @@ class BlinkRun(threading.Thread):
         self.thread.start()
 
     def run(self):
-        while self.stopme == False:
+        while not self.stoprequest.isSet():
             self.blinker.blink(self.delay)
-        self.terminated = True
         self.blinker.cleanup()
+        pass
 
     def stop(self):
-        self.stopme = True
-        while self.terminated == False:
-            time.sleep(0.01)
-    
+        self.stoprequest.set()
+
